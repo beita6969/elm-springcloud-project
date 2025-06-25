@@ -1,0 +1,55 @@
+server:
+  port: 14000
+
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      default-filters:
+        - StripPrefix=1
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      routes:
+        - id: userServer
+          uri: lb://user-server
+          predicates:
+            - Path=/UserController/*/**
+        - id: foodServer
+          uri: lb://food-server
+          predicates:
+            - Path=/FoodController/*/**
+        - id: businessServer
+          uri: lb://business-server
+          predicates:
+            - Path=/BusinessController/*/**
+        - id: cartServer
+          uri: lb://cart-server
+          predicates:
+            - Path=/CartController/*/**
+        - id: deliveryaddressServer
+          uri: lb://deliveryaddress-server
+          predicates:
+            - Path=/DeliveryAddressController/*/**
+        - id: ordersServer
+          uri: lb://orders-server
+          predicates:
+            - Path=/OrdersController/*/**
+        - id: creditServer
+          uri: lb://credit-server
+          predicates:
+            - Path=/CreditController/*/**
+        - id: gptServer
+          uri: lb://gpt-server
+          predicates:
+            - Path=/chatgpt/*/**
