@@ -45,11 +45,4 @@ spring:
           uri: lb://orders-server
           predicates:
             - Path=/OrdersController/*/**
-        - id: creditServer
-          uri: lb://credit-server
-          predicates:
-            - Path=/CreditController/*/**
-        - id: gptServer
-          uri: lb://gpt-server
-          predicates:
-            - Path=/chatgpt/*/**
+        # Credit and GPT service routes removed

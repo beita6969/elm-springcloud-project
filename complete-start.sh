@@ -70,17 +70,7 @@ cd "$BASE_DIR/orders_server_10600"
 nohup mvn spring-boot:run > orders.log 2>&1 &
 sleep 10
 
-# 积分服务
-echo "启动 credit-server..."
-cd "$BASE_DIR/credit_server_10700"
-nohup mvn spring-boot:run > credit.log 2>&1 &
-sleep 10
-
-# GPT服务
-echo "启动 gpt-server..."
-cd "$BASE_DIR/gpt_server_10900"
-nohup mvn spring-boot:run > gpt.log 2>&1 &
-sleep 10
+# 积分服务和GPT服务已移除
 
 # 4. 检查服务注册情况
 echo -e "\n4. 检查服务注册情况..."

@@ -52,12 +52,7 @@ java -jar orders_server_10600/target/orders_server_10600-0.0.1-SNAPSHOT.jar > or
 java -jar orders_server_10601/target/orders_server_10601-0.0.1-SNAPSHOT.jar > orders2.log 2>&1 &
 sleep 5
 
-echo "启动积分服务..."
-java -jar credit_server_10700/target/credit_server_10700-0.0.1-SNAPSHOT.jar > credit.log 2>&1 &
-sleep 5
-
-echo "启动GPT服务..."
-java -jar gpt_server_10900/target/gpt_server_10900-0.0.1-SNAPSHOT.jar > gpt.log 2>&1 &
+# 积分服务和GPT服务已移除
 
 echo ""
 echo "所有服务已启动！"
