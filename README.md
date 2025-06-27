@@ -253,13 +253,96 @@ public void handle(YourDomainEvent event) {
 ### 数据库配置
 各服务独立数据库，遵循微服务数据独立原则。
 
+## 增强功能实现
+
+### 多实例部署与负载均衡
+- 每个服务支持多实例部署（配置文件：application-instance2.yml）
+- Spring Cloud LoadBalancer自动负载均衡
+- 支持查看实例信息：`/UserController/getInstanceInfo`
+
+### 配置动态刷新
+- 集成Spring Cloud Bus + RabbitMQ
+- 支持配置热更新无需重启
+- 刷新端点：`POST /actuator/bus-refresh`
+- 所有控制器添加`@RefreshScope`注解
+
+### API网关增强功能
+
+#### 认证授权过滤器
+- 全局Token验证（AuthGlobalFilter）
+- 白名单机制（登录、注册等接口免认证）
+- Token传递到下游服务
+
+#### API限流
+- 基于令牌桶算法（Bucket4j）
+- 支持按IP和用户ID限流
+- 默认限流：100请求/分钟
+- VIP用户：500请求/分钟
+
+#### 监控与日志
+- 请求响应日志记录
+- Prometheus指标收集
+- 请求耗时、错误率等指标
+- 自定义响应头（X-Request-Id, X-Response-Time）
+
 ## 监控与运维
 
-### 健康检查
-所有服务提供Actuator端点用于健康检查。
+### 健康检查端点
+- 服务健康：`/actuator/health`
+- 服务信息：`/actuator/info`
+- 环境配置：`/actuator/env`
+- 路由信息：`/actuator/gateway/routes`（仅网关）
 
-### 日志
-采用统一的日志格式和级别配置。
+### 监控指标
+- Prometheus格式：`/actuator/prometheus`
+- 自定义指标：
+  - gateway.requests.total
+  - gateway.requests.duration
+  - gateway.requests.errors
+
+### 配置管理
+- Nacos配置中心
+- Spring Cloud Bus配置刷新
+- RabbitMQ消息总线
+
+### 日志管理
+- 统一日志格式
+- 日志文件：`logs/${spring.application.name}.log`
+- 日志级别动态调整
+
+## 测试脚本
+
+### 启动增强版服务
+```bash
+./start-enhanced-services.sh
+```
+
+### 运行功能测试
+```bash
+./test-microservices.sh
+```
+
+### 停止所有服务
+```bash
+./stop-enhanced-services.sh
+```
+
+## 依赖要求
+
+### 必需服务
+- Nacos 2.0+
+- RabbitMQ 3.8+
+- MySQL 8.0+（生产环境）
+
+### RabbitMQ快速启动
+```bash
+# Docker方式
+docker run -d --name rabbitmq \
+  -p 5672:5672 -p 15672:15672 \
+  rabbitmq:3-management
+
+# 默认用户名/密码：guest/guest
+```
 
 ## 贡献指南
 

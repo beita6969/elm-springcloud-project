@@ -10,6 +10,9 @@ spring:
   h2:
     console:
       enabled: true
+  # 导入公共配置
+  config:
+    import: optional:nacos:common-config.yml?group=elm-config
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
