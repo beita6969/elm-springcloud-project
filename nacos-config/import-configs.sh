@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Nacos server address
-NACOS_SERVER="http://localhost:9666"
+NACOS_SERVER="http://localhost:8848"
 NAMESPACE="public"
-GROUP="DEFAULT_GROUP"
+GROUP="elm-config"
 
 echo "Importing configurations to Nacos..."
 
